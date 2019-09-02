@@ -6,6 +6,14 @@ This project is a challenge for a job opening at Anchor Loans. It's a Image Gall
 
 Deployed app at Heroku: https://anchor-gallery.herokuapp.com/
 
+In order to access the project and test it I created a login and password:
+
+```
+username: john
+password: anchor123456
+```
+
+
 # Installing
 
 First step of installation is having Pipenv installed in your machine, if you doesn't have just use the below command:
