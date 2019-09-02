@@ -12,7 +12,7 @@ class ListPhotosView(FormView, MultipleObjectMixin):
     form_class = PhotoForm
     template_name = 'home_page.html'
     success_url = '/'
-    paginate_by = 6
+    paginate_by = 9
 
     def form_valid(self, form):
         if form.is_valid():
@@ -47,6 +47,14 @@ class ApprovePhotoView(LoginRequiredMixin, UpdateView):
         obj = Photo.objects.get(id=self.kwargs['id'])
         return obj
 
+    def post(self, request, *args, **kwargs):
+        try:
+            photo = self.get_object()
+            photo.approved = True
+            photo.save()
+            return super().post(request, *args, **kwargs)
+        except Exception as exc:
+            raise exc
 
 class DeletePhotoView(LoginRequiredMixin, DeleteView):
     login_url = '/login'
@@ -71,4 +79,5 @@ class LikePhotoView(View):
                     "likes": photo.likes
                 }
                 return JsonResponse(json_data, status=200)
+            return JsonResponse({'error': 'Photo not found.'}, status=400)
         return JsonResponse({'error': 'Not allowed.'}, status=400)
