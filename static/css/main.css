@@ -1,0 +1,21 @@
+{% load static %}
+
+.background-image {
+    background: url("/static/img/background_picture.jpeg") bottom center;
+    height: 400px;
+}
+
+.input-box {
+    background-color: #ffffffe3;
+    margin-top: 10px;
+    height: -webkit-fill-available;
+    border-radius: 15px;
+}
+
+.error-message {
+    color: red;
+}
+
+nav a {
+    color: #767676 !important;
+}

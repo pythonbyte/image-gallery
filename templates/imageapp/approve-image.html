@@ -1,0 +1,96 @@
+{% extends "base.html" %}
+
+{% load static %}
+
+{% block content %}
+
+ <div class="container-fluid z-depth-2">
+        <h5 class="center"> Approve Images </h5>
+        <div class="row">
+            {% if object_list %}
+                {% for image in object_list %}
+                    <div class="col s6 m4">
+                      <div class="card">
+                        <div class="card-image">
+                          <img id="{{ image.id }}" src="{{ image.image_file.url }}" width="100%" height="250">
+                        </div>
+                        <div class="valign-wrapper center">
+                            <div class="col s4">
+                              <p><i class="fas fa-user-friends"></i> {{ image.friends_name }}</p>
+                            </div>
+                            <div class="col s4">
+                              <p><i class="far fa-calendar-alt"></i> {{ image.date_taken }}</p>
+                            </div>
+                            <div class="col s4">
+                              <p><i class="far fa-heart"></i> <span id="like-{{image.id}}">{{ image.likes }}</span></p>
+                            </div>
+                        </div>
+                        <div class="card-action">
+                            <div class="row center">
+                                <div class="col s6">
+                                    <form method="POST" > {% csrf_token %}
+                                        <div class="col s12">
+                                            <button class="btn-flat" type="submit">
+                                                <i class="material-icons center" style="color: red">clear</i>
+                                            </button>
+                                        </div>
+                                        <input type="hidden" name="delete" value="{{image.id}}">
+                                    </form>
+                                </div>
+                                <div class="col s6">
+                                    <form method="POST" > {% csrf_token %}
+                                            <div class="col s12">
+                                                <button class="btn-flat" type="submit">
+                                                    <i class="material-icons center" style="color: green">check</i>
+                                                </button>
+                                            </div>
+                                            <input type="hidden" name="approve" value="{{image.id}}">
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                      </div>
+                    </div>
+                {% endfor %}
+            {% else %}
+                <h4 class="center"> No images to approve... </h4>
+            {% endif %}
+        </div>
+        <div class="container">
+            {% if is_paginated %}
+                <div class="container">
+                    <ul class="pagination">
+                        {% if page_obj.has_previous %}
+                            <li class="waves-effect">
+                                <a class="page-link" href="?page={{ page_obj.previous_page_number }}">
+                                    <i class="material-icons">chevron_left</i>
+                                </a>
+                            </li>
+                        {% endif %}
+                        {% for i in page_obj.paginator.page_range|slice:"0:4" %}
+                            <li class="waves-effect {% if page_obj.number == i %}active{% endif %}">
+                                <a class="page-link" href="?page={{ i }}">{{ i }}</a>
+                            </li>
+                        {% endfor %}
+                        {% if page_obj.paginator.num_pages > 8 %}
+                            <li> . . . </li>
+                        {% for i in page_obj.paginator.page_range|slice:"-4:" %}
+                            <li class="waves-effect {% if page_obj.number == i %}active{% endif %}">
+                                <a class="page-link" href="?page={{ i }}">{{ i }}</a>
+                            </li>
+                        {% endfor %}
+                        {% endif %}
+                        {% if page_obj.has_next %}
+                            <li class="waves-effect">
+                                <a class="page-link" href="?page={{ page_obj.next_page_number }}">
+                                    <i class="material-icons">chevron_right</i>
+                                </a>
+                            </li>
+                        {% endif %}
+                    </ul>
+                </div>
+            {% endif %}
+        </div>
+        <br>
+    </div>
+{% endblock %}
