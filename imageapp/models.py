@@ -1,6 +1,7 @@
 from django.utils import timezone
 from djongo import models
 
+
 class Photo(models.Model):
     approved = models.BooleanField(default=False)
     date_taken = models.DateField(default=timezone.now)
@@ -9,4 +10,4 @@ class Photo(models.Model):
     likes = models.PositiveIntegerField(default=0, null=True, blank=True)
 
     def __str__(self):
-        return f'{self.friends_name} - {self.date_taken}'
+        return f"{self.friends_name} - {self.date_taken}"
