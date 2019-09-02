@@ -7,7 +7,6 @@ class Photo(models.Model):
     friends_name = models.CharField(max_length=150, null=False, blank=False)
     image_file = models.ImageField(null=True)
     likes = models.PositiveIntegerField(default=0, null=True, blank=True)
-    name = models.CharField(max_length=150, null=False, blank=False)
 
     def __str__(self):
-        return f'{self.name} - {self.date_taken}'
+        return f'{self.friends_name} - {self.date_taken}'
