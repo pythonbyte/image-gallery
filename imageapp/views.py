@@ -1,9 +1,8 @@
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.http import JsonResponse
-from django.shortcuts import render
 
 from django.views import View
-from django.views.generic.edit import FormView
+from django.views.generic.edit import FormView, UpdateView, DeleteView
 from django.views.generic.list import MultipleObjectMixin, ListView
 
 from .forms import PhotoForm
@@ -27,6 +26,7 @@ class ListPhotosView(FormView, MultipleObjectMixin):
             object_list = object_list.order_by('-'+order_param)
         return super(ListPhotosView, self).get_context_data(object_list=object_list, **kwargs)
 
+
 class ApprovePhotoListView(LoginRequiredMixin, ListView):
     login_url = '/login'
     model = Photo
@@ -36,21 +36,26 @@ class ApprovePhotoListView(LoginRequiredMixin, ListView):
     def get_queryset(self):
         return Photo.objects.filter(approved=False)
 
-    def post(self, request, *args, **kwargs):
-        approve_param_id = request.POST.get('approve', None)
-        delete_param_id = request.POST.get('delete', None)
-        if approve_param_id:
-            photo_to_approve = Photo.objects.filter(id=approve_param_id).first()
-            if photo_to_approve:
-                photo_to_approve.approved = True
-                photo_to_approve.save()
-        elif delete_param_id:
-            photo_to_delete = Photo.objects.filter(id=delete_param_id).first()
-            if photo_to_delete:
-                photo_to_delete.delete()
 
-        object_list = self.get_queryset()
-        return render(request, self.template_name, context={'object_list': object_list})
+class ApprovePhotoView(LoginRequiredMixin, UpdateView):
+    fields = ['approved']
+    login_url = '/login'
+    model = Photo
+    success_url = '/approve-picture'
+
+    def get_object(self):
+        obj = Photo.objects.get(id=self.kwargs['id'])
+        return obj
+
+
+class DeletePhotoView(LoginRequiredMixin, DeleteView):
+    login_url = '/login'
+    model = Photo
+    success_url = '/approve-picture'
+
+    def get_object(self):
+        obj = Photo.objects.get(id=self.kwargs['id'])
+        return obj
 
 
 class LikePhotoView(View):

@@ -28,23 +28,22 @@
                         <div class="card-action">
                             <div class="row center">
                                 <div class="col s6">
-                                    <form method="POST" > {% csrf_token %}
+                                    <form action="{% url 'imageapp:delete-pictures' image.id %}" method="POST" > {% csrf_token %}
                                         <div class="col s12">
                                             <button class="btn-flat" type="submit">
                                                 <i class="material-icons center" style="color: red">clear</i>
                                             </button>
                                         </div>
-                                        <input type="hidden" name="delete" value="{{image.id}}">
                                     </form>
                                 </div>
                                 <div class="col s6">
-                                    <form method="POST" > {% csrf_token %}
+                                    <form action="{% url 'imageapp:approve-pictures' image.id %}" method="POST" > {% csrf_token %}
                                             <div class="col s12">
                                                 <button class="btn-flat" type="submit">
                                                     <i class="material-icons center" style="color: green">check</i>
                                                 </button>
                                             </div>
-                                            <input type="hidden" name="approve" value="{{image.id}}">
+                                            <input type="hidden" name="approved" value="true">
                                     </form>
                                 </div>
                             </div>
