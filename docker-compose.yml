@@ -4,11 +4,11 @@ services:
     build: .
     command: python manage.py runserver 0.0.0.0:8000
     environment:
-      DB_NAME: 'anchorproddb'
-      DB_HOST: 'mongodb+srv://anchordb:anchor123456@cluster0-mk0hg.mongodb.net/test'
-      DB_USER: 'anchordb'
-      DB_PASSWORD: 'anchor123456'
-      SECRET_KEY: 'uynthka!_ba+@s81gkk*xxqjt7%yg(_&139lx66--zxjl+n%kh'
+      DB_NAME: ''
+      DB_HOST: ''
+      DB_USER: ''
+      DB_PASSWORD: ''
+      SECRET_KEY: ''
     volumes:
       - .:/code
     ports:
