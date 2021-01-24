@@ -1,17 +1,8 @@
-# Anchor Loans Challenge
+# Image Gallery App
 
 # Description
 
-This project is a challenge for a job opening at Anchor Loans. It's a Image Gallery platform.
-
-Deployed app at Heroku: https://anchor-gallery.herokuapp.com/
-
-In order to access the project and test it I created a login and password:
-
-```
-username: john
-password: anchor123456
-```
+This project is a Image Gallery platform.
 
 
 # Installing
@@ -46,5 +37,3 @@ the database and the AWS keys.
 To test the application use:
 
 ```$ python manage.py test```
-
-
